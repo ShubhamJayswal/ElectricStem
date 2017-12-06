@@ -30,9 +30,9 @@ function onFrame(event) {
 	// Each frame, rotate the path by 3 degrees:
   if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
 		{
-    //  alert("currentBall.position.x<708 && currentBall.position.y>200");
+      //alert("currentBall.position.x<708 && currentBall.position.y>200");
 			currentBall.position.x+= 2;
-			if(currentBall.position.x>684)
+			if(currentBall.position.x>=684)
 			{
         //alert("currentBall.position.x>684");
 				currentBall.position.x+=2;
@@ -43,25 +43,26 @@ function onFrame(event) {
           t=0;
 
 		}
-		if(currentBall.position.x>=708 && currentBall.position.y>200)
+		if(currentBall.position.x>=708 && currentBall.position.y>198)
 		 {
-      // alert("currentBall.position.x>=708 && currentBall.position.y>200");
+       //alert("currentBall.position.x>=708 && currentBall.position.y>200");
 			 currentBall.position.y-=2;
 		 }
-		 if(currentBall.position.y<=200 && currentBall.position.y>170 &&  currentBall.position.x>260)
+		 if(currentBall.position.y<=198 && currentBall.position.y>170 &&  currentBall.position.x>260)
 		 {
     //  alert("currentBall.position.y<=200 && currentBall.position.y>170");
 			 currentBall.position.x-=2;
 			 currentBall.position.y-=2;
 		 }
-		 if(currentBall.position.y<=170 && currentBall.position.x>260)
+     // it was 260
+		 if(currentBall.position.y<=170 && currentBall.position.x>246)
 		   {
-			//	 alert("currentBall.position.y<=170 && currentBall.position.x>260");
+				// alert("currentBall.position.y<=170 && currentBall.position.x>260");
 		     currentBall.position.x-=2;
          k=0;
 			 }
 
-		 if(currentBall.position.x<=260 && currentBall.position.x>=236 && k!=1)
+		 if(currentBall.position.x<=246 && currentBall.position.x>=236 && k!=1)
 		    {
 				//alert("currentBall.position.x<=260 && currentBall.position.x>=236");
           if(currentBall.position.x>=236)
@@ -71,24 +72,24 @@ function onFrame(event) {
 					currentBall.position.y+=1
 					;
 					t=1;
-          if(!(currentBall.position.x<=260 && currentBall.position.x>=236))
+          if(!(currentBall.position.x<=246 && currentBall.position.x>=236))
              k=0;
 
 
 				}
-
-			if(m==1 && currentBall.position.y<=476)
+      // it was 476 everywhere
+			if(m==1 && currentBall.position.y<=472)
 			{
-      //  alert("m==1 && currentBall.position.y<=476");
+        //alert("m==1 && currentBall.position.y<=476");
 				currentBall.position.y+=2;
-				if(currentBall.position.y>=476)
+				if(currentBall.position.y>=472)
 				   n=1;
-        if(!(m==1 && currentBall.position.y<=476))
+        if(!(m==1 && currentBall.position.y<=472))
            m=0;
 			}
 			if(n==1 && currentBall.position.x<=259)
 			  {
-        //  alert("inside n and the value of x coordinate is"+currentBall.position.x);
+          //alert("inside n and the value of x coordinate is"+currentBall.position.x);
 
           if(currentBall.position.x>=259)
 					    p=1;
@@ -99,13 +100,23 @@ function onFrame(event) {
           if(!(n==1 && currentBall.position.x<=259))
                n=0;
 				}
-				if(p==1 && currentBall.position.x<708)
+        // it was for 684
+				if(p==1 && currentBall.position.x<684)
 				{
-        //   alert("p==1 && currentBall.position.x<708");
+
 				   currentBall.position.x+=2;
-           if(!(p==1 && currentBall.position.x<708))
+           // it didn't have the equal to sign currentBall.position.x<=684.
+           if(!(p==1 && currentBall.position.x<684))
+            {
+              //  alert("p=0"+"and current x is "+currentBall.position.x+"y is"+currentBall.position.y+"t is "+t);
+               t=0;
                p=0;
+             }
+
+
+
         }
+
 
 
 	}
