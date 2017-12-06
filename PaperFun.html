@@ -30,11 +30,11 @@ function onFrame(event) {
 	// Each frame, rotate the path by 3 degrees:
   if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
 		{
-      alert("currentBall.position.x<708 && currentBall.position.y>200");
+    //  alert("currentBall.position.x<708 && currentBall.position.y>200");
 			currentBall.position.x+= 2;
 			if(currentBall.position.x>684)
 			{
-        alert("currentBall.position.x>684");
+        //alert("currentBall.position.x>684");
 				currentBall.position.x+=2;
 				currentBall.position.y-=2;
 			}
@@ -45,25 +45,25 @@ function onFrame(event) {
 		}
 		if(currentBall.position.x>=708 && currentBall.position.y>200)
 		 {
-        alert("currentBall.position.x>=708 && currentBall.position.y>200");
+      // alert("currentBall.position.x>=708 && currentBall.position.y>200");
 			 currentBall.position.y-=2;
 		 }
 		 if(currentBall.position.y<=200 && currentBall.position.y>170 &&  currentBall.position.x>260)
 		 {
-       alert("currentBall.position.y<=200 && currentBall.position.y>170");
+    //  alert("currentBall.position.y<=200 && currentBall.position.y>170");
 			 currentBall.position.x-=2;
 			 currentBall.position.y-=2;
 		 }
 		 if(currentBall.position.y<=170 && currentBall.position.x>260)
 		   {
-			  alert("currentBall.position.y<=170 && currentBall.position.x>260");
+			//	 alert("currentBall.position.y<=170 && currentBall.position.x>260");
 		     currentBall.position.x-=2;
          k=0;
 			 }
 
 		 if(currentBall.position.x<=260 && currentBall.position.x>=236 && k!=1)
 		    {
-				 alert("currentBall.position.x<=260 && currentBall.position.x>=236");
+				//alert("currentBall.position.x<=260 && currentBall.position.x>=236");
           if(currentBall.position.x>=236)
 					   m=1;
 
@@ -79,7 +79,7 @@ function onFrame(event) {
 
 			if(m==1 && currentBall.position.y<=476)
 			{
-         alert("m==1 && currentBall.position.y<=476");
+      //  alert("m==1 && currentBall.position.y<=476");
 				currentBall.position.y+=2;
 				if(currentBall.position.y>=476)
 				   n=1;
@@ -88,7 +88,7 @@ function onFrame(event) {
 			}
 			if(n==1 && currentBall.position.x<=259)
 			  {
-          alert("inside n and the value of x coordinate is"+currentBall.position.x);
+        //  alert("inside n and the value of x coordinate is"+currentBall.position.x);
 
           if(currentBall.position.x>=259)
 					    p=1;
@@ -101,7 +101,7 @@ function onFrame(event) {
 				}
 				if(p==1 && currentBall.position.x<708)
 				{
-          // alert("p==1 && currentBall.position.x<708");
+        //   alert("p==1 && currentBall.position.x<708");
 				   currentBall.position.x+=2;
            if(!(p==1 && currentBall.position.x<708))
                p=0;
@@ -116,7 +116,6 @@ function onFrame(event) {
 </script>
 </head>
 <body>
-  <h1>
 
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
 </body>
