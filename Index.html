@@ -35,7 +35,7 @@ function onMouseDown(event){
 		return;
 
 	if (hitResult) {
-		if(hitResult.item.id==5)
+		if(hitResult.item.className=='Raster')
 		{
 		path = hitResult.item;
 
@@ -59,7 +59,7 @@ function onMouseMove(event) {
 
 	project.activeLayer.selected = false;
 	console.log('event.item', event.item)
-	if (event.item.id==5)
+	if (event.item.className=='Raster')
 	       {
 				 console.log('event.item.className', event.item.className)
          event.item.selected = true;
@@ -78,6 +78,12 @@ function onMouseDrag(event) {
 				path.position += event.delta;
 			}
 		}
+
+function onMouseUp(event)
+{
+	console.log('event', event.point)
+}
+
 
 //drag and drop over
 
@@ -106,7 +112,7 @@ var p=0;
 
 function onFrame(event) {
 	// Each frame, rotate the path by 3 degrees:
-  //battery.rotate(3);
+  battery.rotate(3);
   if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
 		{
       //alert("currentBall.position.x<708 && currentBall.position.y>200");
