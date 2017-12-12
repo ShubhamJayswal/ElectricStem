@@ -22,7 +22,7 @@ var hitOptions = {
 
 
 
-
+var dragging=0;
 var segment, path;
 var movePath = false;
 
@@ -35,7 +35,7 @@ function onMouseDown(event){
 		return;
 
 	if (hitResult) {
-		if(hitResult.item.className=='Raster')
+		if(hitResult.item.id==6)
 		{
 		path = hitResult.item;
 
@@ -59,11 +59,22 @@ function onMouseMove(event) {
 
 	project.activeLayer.selected = false;
 	console.log('event.item', event.item)
-	if (event.item.className=='Raster')
+	if (event.item.id==6)
 	       {
-				 console.log('event.item.className', event.item.className)
+			 console.log('event.item.className', event.item.className)
          event.item.selected = true;
 			 }
+			 console.log("myRect.bounds", myRect.bounds);
+			 console.log("resistor.bounds", resistor.bounds);
+		 if (myRect.bounds.contains(resistor.bounds)) {
+
+	 				// If it does, fill it with green:
+
+	 			 myRect.fillColor = 'red';
+	 		}
+			else{
+				myRect.fillColor = '#ffff66';
+			}
 
 }
 
@@ -77,14 +88,15 @@ function onMouseDrag(event) {
 
 				path.position += event.delta;
 			}
+
+
 		}
 
-function onMouseUp(event)
+function clicked()
 {
-	console.log('event', event.point)
+	console.log('clickedOn',clickedOn);
+	clickedOn = 1;
 }
-
-
 //drag and drop over
 
 var wire = new Raster('wire.png');
@@ -97,20 +109,33 @@ battery.scale(0.7);
 
 var currentBall = new Raster('currentBall2.png', 500, 500);
 
+var rectangle = new Rectangle(500, 30, 100, 30);
+console.log("rectangle width", rectangle.width);
+var myRect = new Path.Rectangle(rectangle);
+myRect.fillColor='yellow';
+
+myRect.strokeColor = 'blue';
+
 
 var resistor = new Raster('resistor.jpg', 40, 400);
 //var newImage = new DragImage('paint2d.png', 200, 300);
+
+
+console.log("is Rectangle empty",rectangle.isEmpty())
+
 
 var t=0;
 var m=0;
 var n=0;
 var k=0;
 var p=0;
+var clickedOn=0;
 
 
 
 
-function onFrame(event) {
+
+ function onFrame(event) {
 	// Each frame, rotate the path by 3 degrees:
   battery.rotate(3);
   if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
@@ -209,6 +234,7 @@ function onFrame(event) {
 </script>
 </head>
 <body>
+	  <button type="button" onclick="onFrame(event)">Run Circuit</button>
     <h1 id="heading"> Electric Circuit </h1>
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
 </body>
