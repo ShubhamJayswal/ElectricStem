@@ -4,7 +4,39 @@
 <!-- Define inlined PaperScript associate it with myCanvas -->
 <link rel="stylesheet" type="text/css" href="paperFunCss.css">
 
+<script type="text/javascript">
 
+var timer = null;
+
+// var running = false;
+function circuit() {
+
+
+//	if(running == false ){
+if(timer == null){
+
+		 // running = true;
+
+	  timer = setInterval(runAnimation, 10);
+	} else {
+
+		clearInterval(timer)
+		timer= null;
+		//running = false;
+
+	}
+
+
+
+}
+
+function runAnimation(){
+	    animate()
+}
+
+
+
+</script>
 
 <script type="text/javascript" src="paper.js"></script>
 <script type="text/paperscript" canvas="myCanvas">
@@ -71,6 +103,7 @@ function onMouseMove(event) {
 	 				// If it does, fill it with green:
 
 	 			 myRect.fillColor = 'red';
+
 	 		}
 			else{
 				myRect.fillColor = '#ffff66';
@@ -92,11 +125,6 @@ function onMouseDrag(event) {
 
 		}
 
-function clicked()
-{
-	console.log('clickedOn',clickedOn);
-	clickedOn = 1;
-}
 //drag and drop over
 
 var wire = new Raster('wire.png');
@@ -129,16 +157,21 @@ var m=0;
 var n=0;
 var k=0;
 var p=0;
-var clickedOn=0;
 
 
 
 
 
- function onFrame(event) {
+
+animate= function onFrame(event) {
+ //console.log("event", event)
+ //console.log("run  game", runGame)
 	// Each frame, rotate the path by 3 degrees:
   battery.rotate(3);
-  if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
+	// if(runGame) {
+	// 	do the thing
+	// }
+	if(currentBall.position.x<708 && currentBall.position.y>200 && t!=1)
 		{
       //alert("currentBall.position.x<708 && currentBall.position.y>200");
 			currentBall.position.x+= 2;
@@ -230,11 +263,10 @@ var clickedOn=0;
 
 
 
-
 </script>
 </head>
 <body>
-	  <button type="button" onclick="onFrame(event)">Run Circuit</button>
+	  <button type="button" onclick="circuit()">Run Circuit</button>
     <h1 id="heading"> Electric Circuit </h1>
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
 </body>
