@@ -135,9 +135,9 @@ function onMouseDrag(event) {
 		}
 
 //drag and drop over
-var rectangle = new Rectangle(495, 50,70, 30);
 
-var wire = new Raster('wire2.png');
+
+var wire = new Raster('wire3.png');
 
 wire.position = view.center;
 
@@ -150,13 +150,25 @@ var currentBall = new Raster('currentBall2.png', 500, 500);
 
 
 
+
+var rectangle = new Rectangle(495, 50,70, 30);
+
+
 console.log("rectangle width", rectangle.width);
 var myRect = new Path.Rectangle(rectangle);
-myRect.fillColor='yellow';
+myRect.fillColor='#EEF9E6';
 
 myRect.strokeColor = 'blue';
-
 var resistor = new Raster('resistor.jpg', 40, 400);
+
+
+var rectangle2 = new Rectangle(260, 50,70, 30);
+
+var myRect2 = new Path.Rectangle(rectangle2);
+
+myRect2.fillColor='#EEF9E6';
+
+myRect2.strokeColor = 'blue';
 
 
 
