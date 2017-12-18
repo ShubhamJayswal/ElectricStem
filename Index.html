@@ -59,8 +59,8 @@ var hitOptions = {
 	tolerance: 5
 };
 
-
-
+var resistance=0;
+var totalResistance = 0;
 var dragging=0;
 var segment, path;
 var movePath = false;
@@ -74,7 +74,7 @@ function onMouseDown(event){
 		return;
 
 	if (hitResult) {
-		if(hitResult.item.id==6)
+		if(hitResult.item.id==7 || hitResult.item.id == 8)
 		{
 		path = hitResult.item;
 
@@ -98,27 +98,54 @@ function onMouseMove(event) {
 
 	project.activeLayer.selected = false;
 	console.log('event.item', event.item)
-	if (event.item.id==6)
+	console.log('item id', event.item.id)
+	if (event.item.id==7 || event.item.id == 8)
 	       {
 			 console.log('event.item.className', event.item.className)
          event.item.selected = true;
 			 }
 			 console.log("myRect.bounds", myRect.bounds);
 			 console.log("resistor.bounds", resistor.bounds);
-		 if (myRect.bounds.contains(resistor.bounds)) {
 
-	 				// If it does, fill it with green:
+			 for(var i=0;i<dropPoints.length;i++)
+			    {
+						/*
+          if(myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds)
+					 && myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds))
+					{
+						console.log("inside and condition")
+						resistance = 55;
+					}
+  */
+	     	 if (dropPoints[i].bounds.contains(resistor.bounds) || dropPoints[i].bounds.contains(resistor2.bounds))
 
-				console.log("The resitance is", 2);
+            {
+	 			    	// If it does, fill it with green:
+							/*
+							console.log("inside or condition")
+							if(dropPoints[i].bounds.contains(resistor.bounds) ==true && dropPoints[i].bounds.contains(resistor2.bounds)==false)
+ 						      resistance = 25;
+ 						  if( dropPoints[i].bounds.contains(resistor2.bounds) == true && dropPoints[i].bounds.contains(resistor.bounds)== false)
+ 						 		  resistance = 30; */
+	 			    dropPoints[i].fillColor = '#7D6CF3';
+	 		   }
+			    else{
+				  dropPoints[i].fillColor = '#EEF9E6';
+			   }
+				 console.log("test", resistance)
+			 }
 
-	 			 myRect.fillColor = '#7D6CF3';
+		 if(myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds)
+		    && myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds))
+		    {
+			  console.log("inside and condition")
+			  resistance = 55;
+		    }
 
-	 		}
-			else{
-				myRect.fillColor = '#EEF9E6';
-			}
+
 
 }
+
 
 function onMouseDrag(event) {
 
@@ -126,8 +153,8 @@ function onMouseDrag(event) {
 				console.log('segment', segment)
 				segment.point += event.delta;
 				path.smooth();
-			} else if (path) {
-
+			}
+			else if (path) {
 				path.position += event.delta;
 			}
 
@@ -135,7 +162,6 @@ function onMouseDrag(event) {
 		}
 
 //drag and drop over
-
 
 var wire = new Raster('wire3.png');
 
@@ -147,28 +173,36 @@ battery.scale(0.7);
 
 var currentBall = new Raster('currentBall2.png', 500, 500);
 
+var dropPoints = []
 
-
-
-
+// declared the first rectanglular box
 var rectangle = new Rectangle(495, 50,70, 30);
 
-
-console.log("rectangle width", rectangle.width);
+console.log("rectangle1 width", rectangle.point);
 var myRect = new Path.Rectangle(rectangle);
 myRect.fillColor='#EEF9E6';
 
 myRect.strokeColor = 'blue';
-var resistor = new Raster('resistor.jpg', 40, 400);
+
+dropPoints.push(myRect)
 
 
+// declared the second rectangle
 var rectangle2 = new Rectangle(260, 50,70, 30);
 
+console.log("rectangle2 width", rectangle2.point);
+
 var myRect2 = new Path.Rectangle(rectangle2);
-
 myRect2.fillColor='#EEF9E6';
-
 myRect2.strokeColor = 'blue';
+
+dropPoints.push(myRect2)
+
+// declared the resistor
+
+var resistor = new Raster('resistor.jpg', 40, 400);
+
+var resistor2 = new Raster('resistor2.png', 40, 450);
 
 
 
