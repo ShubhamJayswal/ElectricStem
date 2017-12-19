@@ -68,13 +68,15 @@ var movePath = false;
 function onMouseDown(event){
 
 	segment = path = null;
-	console.log('hitOptions', hitOptions)
+	//console.log('hitOptions', hitOptions)
 	var hitResult = project.hitTest(event.point);
 	if (!hitResult)
 		return;
 
 	if (hitResult) {
-		if(hitResult.item.id==7 || hitResult.item.id == 8)
+		if(hitResult.item.id==7 || hitResult.item.id == 8 || hitResult.item.id ==9
+    || hitResult.item.id ==10
+		)
 		{
 		path = hitResult.item;
 
@@ -86,7 +88,7 @@ function onMouseDown(event){
 			path.smooth();
 		}
 
-  console.log('hitResult.type', hitResult.type);
+  //console.log('hitResult.type', hitResult.type);
 	movePath = hitResult.type == 'fill';
 	if (movePath)
 		project.activeLayer.addChild(hitResult.item);
@@ -97,15 +99,18 @@ function onMouseDown(event){
 function onMouseMove(event) {
 
 	project.activeLayer.selected = false;
-	console.log('event.item', event.item)
-	console.log('item id', event.item.id)
-	if (event.item.id==7 || event.item.id == 8)
+	//console.log('event.item', event.item)
+	//console.log('item id', event.item.id)
+	if (event.item.id==7 || event.item.id == 8 || event.item.id ==9 || event.item.id ==10)
 	       {
-			 console.log('event.item.className', event.item.className)
+			// console.log('event.item.className', event.item.className)
          event.item.selected = true;
 			 }
-			 console.log("myRect.bounds", myRect.bounds);
-			 console.log("resistor.bounds", resistor.bounds);
+			// console.log("myRect.bounds", myRect.bounds);
+			// console.log("resistor.bounds", resistor.bounds);
+
+
+
 
 			 for(var i=0;i<dropPoints.length;i++)
 			    {
@@ -117,9 +122,14 @@ function onMouseMove(event) {
 						resistance = 55;
 					}
   */
-	     	 if (dropPoints[i].bounds.contains(resistor.bounds) || dropPoints[i].bounds.contains(resistor2.bounds))
+
+	     	 if (dropPoints[i].bounds.contains(resistor.bounds) ||
+				  dropPoints[i].bounds.contains(resistor2.bounds)
+					|| dropPoints[i].bounds.contains(newWire.bounds)
+				   || dropPoints[i].bounds.contains(newWireColor.bounds))
 
             {
+
 	 			    	// If it does, fill it with green:
 							/*
 							console.log("inside or condition")
@@ -134,27 +144,114 @@ function onMouseMove(event) {
 			   }
 
 			 }
-
+    // contains both resistors
 		 if(  (myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds))
 		    && (myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds)))
 		    {
 			  resistance = 55;
-				console.log("inside and condition and resistance="+resistance)
+				console.log("inside and condition and combined resistance="+resistance)
 		    }
+		 //contains first resistor and nothing else
      else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
-        && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds)) )
+        && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+			  && !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds)))
 				{
 					resistance = 25;
-					console.log("first resister is inside and the resistance is", 25)
+					console.log("contains first resistor and nothing else and the circuit is incomplete")
 				}
-				else if((myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
-	         && !(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds)) )
+        // contains second resistor and nothing else
+				else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+	         && (myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+	 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+	 			  && !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds)))
 	 				{
 	 					resistance = 25;
-	 					console.log("second resister is inside and the resistance is", 30)
+	 					console.log("contains second resistor and nothing else")
 	 				}
+			// contains first resistor and first wire: circuit complete
+				else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+	         && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+	 				&& (myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+					&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+				)
+	 				{
+	 					resistance = 25;
+	 					console.log("contains first resistor and first wire: circuit complete and circuit is complete. Resistance:",
+						resistance)
+	 				}
+        // contains first resistor and second wire
+					else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+		         && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+		 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+					)
+		 				{
+		 					resistance = 25;
+		 					console.log("contains first resistor and second wire: circuit complete and circuit is complete. Resistance:",
+							resistance)
+		 				}
+           // conatains second resistor, first wire
+						else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+			         && (myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+			 				&& (myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+							&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+						)
+			 				{
 
-      
+			 					console.log("conatains second resistor, first wire, circuit complete. Resistance:",
+								30)
+			 				}
+            // contains second resistor, second wire
+							else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+				         && (myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+				 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+								&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+							)
+				 				{
+
+				 					console.log("contains second resistor, second wire, circuit complete. Resistance:",
+									30)
+				 				}
+
+            // first wire and nothing else.
+						else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+							 && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+							&& (myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+							&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+						)
+							{
+
+								console.log("first wire and nothing else, circuit incomplete")
+
+							}
+
+					// second wire nothing else
+					else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+						 && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+						&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+					)
+						{
+
+							console.log("second wire nothing else. Circuit incomplete")
+						}
+          // both wires, nothing else
+
+					else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+						 && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+						&& (myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
+						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
+					)
+						{
+							console.log("both wires, circuit complete. O resistance"
+						)
+						}
+
+
+
+
+
 
 
 }
@@ -163,7 +260,7 @@ function onMouseMove(event) {
 function onMouseDrag(event) {
 
 			if (segment) {
-				console.log('segment', segment)
+			//	console.log('segment', segment)
 				segment.point += event.delta;
 				path.smooth();
 			}
@@ -191,7 +288,7 @@ var dropPoints = []
 // declared the first rectanglular box
 var rectangle = new Rectangle(495, 50,70, 30);
 
-console.log("rectangle1 width", rectangle.point);
+//console.log("rectangle1 width", rectangle.point);
 var myRect = new Path.Rectangle(rectangle);
 myRect.fillColor='#EEF9E6';
 
@@ -203,7 +300,7 @@ dropPoints.push(myRect)
 // declared the second rectangle
 var rectangle2 = new Rectangle(260, 50,70, 30);
 
-console.log("rectangle2 width", rectangle2.point);
+//console.log("rectangle2 width", rectangle2.point);
 
 var myRect2 = new Path.Rectangle(rectangle2);
 myRect2.fillColor='#EEF9E6';
@@ -217,12 +314,20 @@ var resistor = new Raster('resistor.jpg', 40, 400);
 
 var resistor2 = new Raster('resistor2.png', 40, 450);
 
+var newWire = new Raster('smallWire.png', 40, 350);
 
+var newWireColor = new Raster('newWireColor.png', 40, 300);
+
+newWireColor.scale(0.95)
+
+newWire.scale(0.95)
+
+dropPoints.push(newWire)
 
 //var newImage = new DragImage('paint2d.png', 200, 300);
 
 
-console.log("is Rectangle empty", rectangle.isEmpty())
+//console.log("is Rectangle empty", rectangle.isEmpty())
 
 
 var t=0;
