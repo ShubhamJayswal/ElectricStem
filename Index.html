@@ -132,16 +132,29 @@ function onMouseMove(event) {
 			    else{
 				  dropPoints[i].fillColor = '#EEF9E6';
 			   }
-				 console.log("test", resistance)
+
 			 }
 
-		 if(myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds)
-		    && myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds))
+		 if(  (myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds))
+		    && (myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds)))
 		    {
-			  console.log("inside and condition")
 			  resistance = 55;
+				console.log("inside and condition and resistance="+resistance)
 		    }
+     else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
+        && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds)) )
+				{
+					resistance = 25;
+					console.log("first resister is inside and the resistance is", 25)
+				}
+				else if((myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
+	         && !(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds)) )
+	 				{
+	 					resistance = 25;
+	 					console.log("second resister is inside and the resistance is", 30)
+	 				}
 
+      
 
 
 }
