@@ -155,7 +155,7 @@ function onMouseMove(event) {
      else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
         && !(myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
-			  && !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds)))
+			  && !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds)))
 				{
 					resistance = 25;
 					console.log("contains first resistor and nothing else and the circuit is incomplete")
@@ -164,7 +164,7 @@ function onMouseMove(event) {
 				else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
 	         && (myRect.bounds.contains(resistor2.bounds)||myRect2.bounds.contains(resistor2.bounds))
 	 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
-	 			  && !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds)))
+	 			  && !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds)))
 	 				{
 	 					resistance = 25;
 	 					console.log("contains second resistor and nothing else")
