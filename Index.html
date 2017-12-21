@@ -21,10 +21,7 @@ if(timer == null){
 		clearInterval(timer)
 		timer= null;
 		//running = false;
-
 	}
-
-
 
 }
 
@@ -38,6 +35,11 @@ function reset(){
      initialState()
 }
 
+
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
 
 
 
@@ -75,7 +77,8 @@ function onMouseDown(event){
 
 	if (hitResult) {
 		if(hitResult.item.id==7 || hitResult.item.id == 8 || hitResult.item.id ==9
-    || hitResult.item.id ==10
+    || hitResult.item.id ==10 || hitResult.item.id== 11
+
 		)
 		{
 		path = hitResult.item;
@@ -101,7 +104,7 @@ function onMouseMove(event) {
 	project.activeLayer.selected = false;
 	//console.log('event.item', event.item)
 	//console.log('item id', event.item.id)
-	if (event.item.id==7 || event.item.id == 8 || event.item.id ==9 || event.item.id ==10)
+	if (event.item.id==7 || event.item.id == 8 || event.item.id ==9 || event.item.id ==10 || event.item.id ==11)
 	       {
 			// console.log('event.item.className', event.item.className)
          event.item.selected = true;
@@ -130,13 +133,7 @@ function onMouseMove(event) {
 
             {
 
-	 			    	// If it does, fill it with green:
-							/*
-							console.log("inside or condition")
-							if(dropPoints[i].bounds.contains(resistor.bounds) ==true && dropPoints[i].bounds.contains(resistor2.bounds)==false)
- 						      resistance = 25;
- 						  if( dropPoints[i].bounds.contains(resistor2.bounds) == true && dropPoints[i].bounds.contains(resistor.bounds)== false)
- 						 		  resistance = 30; */
+
 	 			    dropPoints[i].fillColor = '#7D6CF3';
 	 		   }
 			    else{
@@ -250,10 +247,6 @@ function onMouseMove(event) {
 
 
 
-
-
-
-
 }
 
 
@@ -324,8 +317,11 @@ newWire.scale(0.95)
 
 dropPoints.push(newWire)
 
-//var newImage = new DragImage('paint2d.png', 200, 300);
 
+var lightBulb = new Raster('lightBulb.png', 40, 250);
+//var lightBulbGlowing = new Raster('lightBulbGlowing.png', 40, 200);
+//var newImage = new DragImage('paint2d.png', 200, 300);
+//lightBulbGlowing.scale(1.06)
 
 //console.log("is Rectangle empty", rectangle.isEmpty())
 
@@ -454,6 +450,12 @@ animate= function onFrame(event) {
 	  <button type="button" onclick="reset()">Reset</button>
 	  <button type="button" onclick="circuit()">Run/Pause</button>
     <h1 id="heading"> Electric Circuit </h1>
+
+
+
+		<div class="popup" onclick="myFunction()">Click me to toggle the popup!
+		  <span class="popuptext" id="myPopup">A Simple Popup!</span>
+		</div>
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
 </body>
 </html>
