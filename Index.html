@@ -11,6 +11,8 @@ var timer = null;
 // var running = false;
 function circuit() {
 //	if(running == false ){
+
+
 if(timer == null){
 		 // running = true;
 	  timer = setInterval(runAnimation, 10);
@@ -452,7 +454,7 @@ function onMouseDrag(event) {
 
 //drag and drop over
 
-var wire = new Raster('wire4.png');
+var wire = new Raster('wire3.png');
 
 wire.position = view.center;
 
@@ -648,9 +650,13 @@ animate = function onFrame(event) {
 </head>
 <body>
 	  <button type="button" onclick="reset()">Reset</button>
-	  <button type="button" onclick="circuit()">Run/Pause</button>
+	  <button type="button" onclick="circuit()" id="switch"><img src="switchOff.png" /></button>
     <h1 id="heading"> Electric Circuit </h1>
 
+		<label class="switch">
+  <input type="checkbox" onclick="circuit()">
+  <span class="slider round"></span>
+  </label>
 
 
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
