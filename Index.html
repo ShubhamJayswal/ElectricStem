@@ -92,9 +92,9 @@ function onMouseDown(event){
 	if (!hitResult)
 		return;
 
-	if (hitResult) {
-		if(hitResult.item.id==12 || hitResult.item.id == 8 || hitResult.item.id ==9
-    || hitResult.item.id ==10 || hitResult.item.id== 11 || hitResult.item.id ==13
+	if (hitResult){
+		if(hitResult.item.id==12 || hitResult.item.id == 13
+    || hitResult.item.id ==10 || hitResult.item.id== 11 || hitResult.item.id ==14
 
 		)
 		{
@@ -121,7 +121,8 @@ function onMouseMove(event) {
 	project.activeLayer.selected = false;
 	console.log('event.item', event.item)
 	console.log('item id', event.item.id)
-	if (event.item.id==13 || event.item.id == 12 || event.item.id ==9 || event.item.id ==10 || event.item.id ==11)
+	if (event.item.id==14 || event.item.id == 12 || event.item.id ==10 || event.item.id ==11
+	|| event.item.id ==13)
 	       {
 			// console.log('event.item.className', event.item.className)
          event.item.selected = true;
@@ -139,7 +140,10 @@ function onMouseMove(event) {
 	     if (dropPoints[i].bounds.contains(resistor.bounds) ||
 				  dropPoints[i].bounds.contains(resistor2.bounds)
 					|| dropPoints[i].bounds.contains(newWire.bounds)
-				   || dropPoints[i].bounds.contains(newWireColor.bounds))
+				   || dropPoints[i].bounds.contains(newWireColor.bounds)
+
+
+				  )
 
             {
 
@@ -151,6 +155,12 @@ function onMouseMove(event) {
 			   }
 
 			 }
+
+
+
+
+
+
     // contains both resistors
 		 if(  (myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds))
 		    && (myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds)))
@@ -162,6 +172,26 @@ function onMouseMove(event) {
 				 text.visible = false;
 				 text.content = 'Congratulations! Circuit contains both resistors and is complete.';
 				 showMessage(event);
+				 for(var i=0;i<dropPoints.length;i++)
+						{
+
+
+				 if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+							{
+
+
+							dropPoints[i].fillColor = 'white';
+							lightBulb.visible = false;
+							glowingBulb.visible = true;
+
+					 }
+						else{
+						dropPoints[i].fillColor = '#EEF9E6';
+					 }
+				 }
+
+
 		    }
 		 //contains first resistor and nothing else
      else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -173,6 +203,8 @@ function onMouseMove(event) {
 					console.log("contains first resistor and nothing else and the circuit is incomplete")
 					text.content = 'Note: Circuit contains only one resistor is incomplete. Connect a wire or a resistor.';
           showMessage(event);
+					lightBulb.visible = true;
+					glowingBulb.visible = false;
 				}
         // contains second resistor and nothing else
 				else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -186,6 +218,8 @@ function onMouseMove(event) {
 						text.content = 'Note: Circuit contains only one resistor and is incomplete!';
 	          showMessage(event);
 	 					console.log("contains second resistor and nothing else")
+						lightBulb.visible = true;
+						glowingBulb.visible = false;
 
 	 				}
 			// contains first resistor and first wire: circuit complete
@@ -202,6 +236,25 @@ function onMouseMove(event) {
 						resistance)
 						text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 	          showMessage(event);
+						for(var i=0;i<dropPoints.length;i++)
+							 {
+
+
+						if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+								 {
+
+
+								 dropPoints[i].fillColor = 'white';
+								 lightBulb.visible = false;
+								 glowingBulb.visible = true;
+
+							}
+							 else{
+							 dropPoints[i].fillColor = '#EEF9E6';
+							}
+						}
+
 	 				}
         // contains first resistor and second wire
 					else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -217,6 +270,26 @@ function onMouseMove(event) {
 							resistance)
 							text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 		          showMessage(event);
+							for(var i=0;i<dropPoints.length;i++)
+								 {
+
+
+							if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+									 {
+
+
+									 dropPoints[i].fillColor = 'white';
+									 lightBulb.visible = false;
+									 glowingBulb.visible = true;
+									// dropPoints[i].strokeColor = 'blue';
+									 //myRect3.visible = false;
+								}
+								 else{
+								 dropPoints[i].fillColor = '#EEF9E6';
+								}
+							}
+
 		 				}
            // conatains second resistor, first wire
 						else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -231,6 +304,25 @@ function onMouseMove(event) {
 								30)
 								text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 			          showMessage(event);
+								for(var i=0;i<dropPoints.length;i++)
+									 {
+
+
+								if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+										 {
+
+
+										 dropPoints[i].fillColor = 'white';
+										 lightBulb.visible = false;
+										 glowingBulb.visible = true;
+
+									}
+									 else{
+									 dropPoints[i].fillColor = '#EEF9E6';
+									}
+								}
+
 			 				}
             // contains second resistor, second wire
 							else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -245,6 +337,25 @@ function onMouseMove(event) {
 									30)
 									text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 				          showMessage(event);
+									for(var i=0;i<dropPoints.length;i++)
+										 {
+
+
+									if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+											 {
+
+
+											 dropPoints[i].fillColor = 'white';
+											 lightBulb.visible = false;
+											 glowingBulb.visible = true;
+
+										}
+										 else{
+										 dropPoints[i].fillColor = '#EEF9E6';
+										}
+									}
+
 				 				}
 
             // first wire and nothing else.
@@ -259,6 +370,8 @@ function onMouseMove(event) {
 								console.log("first wire and nothing else, circuit incomplete")
 								text.content = 'Note: Ciruit contains only one wire and is incomplete! Connect a wire or a resistor.';
 			          showMessage(event);
+								lightBulb.visible = true;
+								glowingBulb.visible = false;
 
 							}
 
@@ -274,6 +387,8 @@ function onMouseMove(event) {
 							console.log("second wire nothing else. Circuit incomplete")
 							text.content = 'Note: Ciruit contains only one wire and is incomplete! Connect a wire or a resistor.';
 							showMessage(event);
+							lightBulb.visible = true;
+							glowingBulb.visible = false;
 						}
           // both wires, nothing else
 
@@ -289,6 +404,26 @@ function onMouseMove(event) {
 						)
 						text.content = 'Congratulations! Circuit contains both wires and is complete.';
 						showMessage(event);
+						for(var i=0;i<dropPoints.length;i++)
+							 {
+
+
+						if (dropPoints[i].bounds.contains(lightBulb.bounds))
+
+								 {
+
+
+								 dropPoints[i].fillColor = 'red';
+								 lightBulb.visible = false;
+								 glowingBulb.visible = true;
+
+
+							}
+							 else{
+							 dropPoints[i].fillColor = '#EEF9E6';
+							}
+						}
+
 						}
 					else{
 						newRect.visible = false;
@@ -352,11 +487,24 @@ myRect2.strokeColor = 'blue';
 
 dropPoints.push(myRect2)
 
+// declared 3rd rectangle
+var rectangle3 = new Rectangle(395, 0, 60, 60);
+
+//console.log("rectangle2 width", rectangle2.point);
+
+var myRect3 = new Path.Rectangle(rectangle3);
+myRect3.fillColor='#EEF9E6';
+myRect3.strokeColor = 'blue';
+
+dropPoints.push(myRect3)
+
+
 // declared the resistor
 
 var resistor = new Raster('resistor.jpg', 40, 400);
 
 var resistor2 = new Raster('resistor2.png', 40, 450);
+
 
 var newWire = new Raster('smallWire.png', 40, 350);
 
@@ -375,7 +523,8 @@ var lightBulb = new Raster('lightBulb.png', 40, 250);
 //lightBulbGlowing.scale(1.06)
 
 //console.log("is Rectangle empty", rectangle.isEmpty())
-
+var glowingBulb = new Raster('glowingBulb.png', 425,  30);
+glowingBulb.visible = false;
 
 var t=0;
 var m=0;
