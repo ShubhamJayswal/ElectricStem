@@ -12,9 +12,7 @@ var timer = null;
 function circuit() {
 //	if(running == false ){
 if(timer == null){
-
 		 // running = true;
-
 	  timer = setInterval(runAnimation, 10);
 	} else {
 
@@ -22,7 +20,6 @@ if(timer == null){
 		timer= null;
 		//running = false;
 	}
-
 }
 
 function runAnimation(){
@@ -37,8 +34,7 @@ function reset(){
 
 
 function myFunction() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
+  hideElement()
 }
 
 
@@ -49,9 +45,28 @@ function myFunction() {
 <script type="text/javascript" src="paper.js"></script>
 <script type="text/paperscript" canvas="myCanvas">
 
+var rectangle = new Rectangle(new Point(230, 450), new Point(650, 470));
+var cornerSize = new Size(5, 5);
+var newRect = new Path.RoundRectangle(rectangle, cornerSize);
+newRect.fillColor = '#7B68EE';
+
+var text = new PointText(new Point(420, 465));
+text.justification = 'center';
+text.fillColor = '#fff';
+//text.content = 'The contents of the point text';
+
+newRect.visible = false;
+text.visible = false;
+
+
+function showMessage(event)
+ {
+ 	      newRect.visible = true;
+ 	      text.visible = true;
+ }
+
 
 var clearCanvas = false;
-
 
 //drag and drop_zone
 var hitOptions = {
@@ -67,6 +82,8 @@ var dragging=0;
 var segment, path;
 var movePath = false;
 
+var checkVar = 10;
+
 function onMouseDown(event){
 
 	segment = path = null;
@@ -76,8 +93,8 @@ function onMouseDown(event){
 		return;
 
 	if (hitResult) {
-		if(hitResult.item.id==7 || hitResult.item.id == 8 || hitResult.item.id ==9
-    || hitResult.item.id ==10 || hitResult.item.id== 11
+		if(hitResult.item.id==12 || hitResult.item.id == 8 || hitResult.item.id ==9
+    || hitResult.item.id ==10 || hitResult.item.id== 11 || hitResult.item.id ==13
 
 		)
 		{
@@ -102,9 +119,9 @@ function onMouseDown(event){
 function onMouseMove(event) {
 
 	project.activeLayer.selected = false;
-	//console.log('event.item', event.item)
-	//console.log('item id', event.item.id)
-	if (event.item.id==7 || event.item.id == 8 || event.item.id ==9 || event.item.id ==10 || event.item.id ==11)
+	console.log('event.item', event.item)
+	console.log('item id', event.item.id)
+	if (event.item.id==13 || event.item.id == 12 || event.item.id ==9 || event.item.id ==10 || event.item.id ==11)
 	       {
 			// console.log('event.item.className', event.item.className)
          event.item.selected = true;
@@ -117,16 +134,9 @@ function onMouseMove(event) {
 
 			 for(var i=0;i<dropPoints.length;i++)
 			    {
-						/*
-          if(myRect.bounds.contains(resistor.bounds)||myRect.bounds.contains(resistor2.bounds)
-					 && myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds))
-					{
-						console.log("inside and condition")
-						resistance = 55;
-					}
-  */
 
-	     	 if (dropPoints[i].bounds.contains(resistor.bounds) ||
+
+	     if (dropPoints[i].bounds.contains(resistor.bounds) ||
 				  dropPoints[i].bounds.contains(resistor2.bounds)
 					|| dropPoints[i].bounds.contains(newWire.bounds)
 				   || dropPoints[i].bounds.contains(newWireColor.bounds))
@@ -146,7 +156,12 @@ function onMouseMove(event) {
 		    && (myRect2.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor2.bounds)))
 		    {
 			  resistance = 55;
-				console.log("inside and condition and combined resistance="+resistance)
+				//console.log("inside and condition and combined resistance="+resistance)
+				//project.layers.push(text);
+				newRect.visible = false;
+				 text.visible = false;
+				 text.content = 'Congratulations! Circuit contains both resistors and is complete.';
+				 showMessage(event);
 		    }
 		 //contains first resistor and nothing else
      else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -156,6 +171,8 @@ function onMouseMove(event) {
 				{
 					resistance = 25;
 					console.log("contains first resistor and nothing else and the circuit is incomplete")
+					text.content = 'Note: Circuit contains only one resistor is incomplete. Connect a wire or a resistor.';
+          showMessage(event);
 				}
         // contains second resistor and nothing else
 				else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -163,8 +180,13 @@ function onMouseMove(event) {
 	 				&& !(myRect.bounds.contains(newWire.bounds) || myRect2.bounds.contains(newWire.bounds))
 	 			  && !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds)))
 	 				{
+						newRect.visible = false;
+						 text.visible = false;
 	 					resistance = 25;
+						text.content = 'Note: Circuit contains only one resistor and is incomplete!';
+	          showMessage(event);
 	 					console.log("contains second resistor and nothing else")
+
 	 				}
 			// contains first resistor and first wire: circuit complete
 				else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -173,9 +195,13 @@ function onMouseMove(event) {
 					&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 				)
 	 				{
+						newRect.visible = false;
+						text.visible = false;
 	 					resistance = 25;
 	 					console.log("contains first resistor and first wire: circuit complete and circuit is complete. Resistance:",
 						resistance)
+						text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
+	          showMessage(event);
 	 				}
         // contains first resistor and second wire
 					else if((myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -184,9 +210,13 @@ function onMouseMove(event) {
 						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 					)
 		 				{
+							newRect.visible = false;
+						  text.visible = false;
 		 					resistance = 25;
 		 					console.log("contains first resistor and second wire: circuit complete and circuit is complete. Resistance:",
 							resistance)
+							text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
+		          showMessage(event);
 		 				}
            // conatains second resistor, first wire
 						else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -195,9 +225,12 @@ function onMouseMove(event) {
 							&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 						)
 			 				{
-
+								newRect.visible = false;
+							  text.visible = false;
 			 					console.log("conatains second resistor, first wire, circuit complete. Resistance:",
 								30)
+								text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
+			          showMessage(event);
 			 				}
             // contains second resistor, second wire
 							else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -206,9 +239,12 @@ function onMouseMove(event) {
 								&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 							)
 				 				{
-
+									newRect.visible = false;
+									 text.visible = false;
 				 					console.log("contains second resistor, second wire, circuit complete. Resistance:",
 									30)
+									text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
+				          showMessage(event);
 				 				}
 
             // first wire and nothing else.
@@ -218,8 +254,11 @@ function onMouseMove(event) {
 							&& !(myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 						)
 							{
-
+								newRect.visible = false;
+								 text.visible = false;
 								console.log("first wire and nothing else, circuit incomplete")
+								text.content = 'Note: Ciruit contains only one wire and is incomplete! Connect a wire or a resistor.';
+			          showMessage(event);
 
 							}
 
@@ -230,8 +269,11 @@ function onMouseMove(event) {
 						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 					)
 						{
-
+							newRect.visible = false;
+							text.visible = false;
 							console.log("second wire nothing else. Circuit incomplete")
+							text.content = 'Note: Ciruit contains only one wire and is incomplete! Connect a wire or a resistor.';
+							showMessage(event);
 						}
           // both wires, nothing else
 
@@ -241,9 +283,18 @@ function onMouseMove(event) {
 						&& (myRect.bounds.contains(newWireColor.bounds) || myRect2.bounds.contains(newWireColor.bounds))
 					)
 						{
+							newRect.visible = false;
+							 text.visible = false;
 							console.log("both wires, circuit complete. O resistance"
 						)
+						text.content = 'Congratulations! Circuit contains both wires and is complete.';
+						showMessage(event);
 						}
+					else{
+						newRect.visible = false;
+						text.visible = false;
+
+					}
 
 
 
@@ -335,7 +386,7 @@ var p=0;
 
 
 
-animate= function onFrame(event) {
+animate = function onFrame(event) {
  //console.log("event", event)
  //console.log("run  game", runGame)
 	// Each frame, rotate the path by 3 degrees:
@@ -453,9 +504,6 @@ animate= function onFrame(event) {
 
 
 
-		<div class="popup" onclick="myFunction()">Click me to toggle the popup!
-		  <span class="popuptext" id="myPopup">A Simple Popup!</span>
-		</div>
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
 </body>
 </html>
