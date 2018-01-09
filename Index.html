@@ -22,6 +22,7 @@ if(timer == null){
 		timer= null;
 		//running = false;
 	}
+	showGlow()
 }
 
 function runAnimation(){
@@ -32,6 +33,7 @@ function reset(){
 	   clearInterval(timer)
 		 timer = null;
      initialState()
+		 hideGlowingBulb()
 }
 
 
@@ -170,8 +172,11 @@ function onMouseMove(event) {
 			  resistance = 55;
 				//console.log("inside and condition and combined resistance="+resistance)
 				//project.layers.push(text);
+				myRect.fillColor = '#7D6CF3';
+				myRect2.fillColor ='#7D6CF3';
 				newRect.visible = false;
 				 text.visible = false;
+				 currentBall.visible =true;
 				 text.content = 'Congratulations! Circuit contains both resistors and is complete.';
 				 showMessage(event);
 				 for(var i=0;i<dropPoints.length;i++)
@@ -207,6 +212,7 @@ function onMouseMove(event) {
           showMessage(event);
 					lightBulb.visible = true;
 					glowingBulb.visible = false;
+					currentBall.visible = false;
 				}
         // contains second resistor and nothing else
 				else if(!(myRect.bounds.contains(resistor.bounds)||myRect2.bounds.contains(resistor.bounds))
@@ -216,6 +222,7 @@ function onMouseMove(event) {
 	 				{
 						newRect.visible = false;
 						 text.visible = false;
+						 		currentBall.visible = false;
 	 					resistance = 25;
 						text.content = 'Note: Circuit contains only one resistor and is incomplete!';
 	          showMessage(event);
@@ -238,6 +245,9 @@ function onMouseMove(event) {
 						resistance)
 						text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 	          showMessage(event);
+								currentBall.visible = true;
+								myRect.fillColor = '#7D6CF3';
+								myRect2.fillColor ='#7D6CF3';
 						for(var i=0;i<dropPoints.length;i++)
 							 {
 
@@ -272,6 +282,9 @@ function onMouseMove(event) {
 							resistance)
 							text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 		          showMessage(event);
+									currentBall.visible = true;
+									myRect.fillColor = '#7D6CF3';
+									myRect2.fillColor ='#7D6CF3';
 							for(var i=0;i<dropPoints.length;i++)
 								 {
 
@@ -302,10 +315,13 @@ function onMouseMove(event) {
 			 				{
 								newRect.visible = false;
 							  text.visible = false;
+										currentBall.visible = true;
 			 					console.log("conatains second resistor, first wire, circuit complete. Resistance:",
 								30)
 								text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 			          showMessage(event);
+								myRect.fillColor = '#7D6CF3';
+								myRect2.fillColor ='#7D6CF3';
 								for(var i=0;i<dropPoints.length;i++)
 									 {
 
@@ -339,6 +355,9 @@ function onMouseMove(event) {
 									30)
 									text.content = 'Congratulations! Circuit contains a resitor and a wire and is complete.';
 				          showMessage(event);
+											currentBall.visible = true;
+											myRect.fillColor = '#7D6CF3';
+											myRect2.fillColor ='#7D6CF3';
 									for(var i=0;i<dropPoints.length;i++)
 										 {
 
@@ -374,6 +393,7 @@ function onMouseMove(event) {
 			          showMessage(event);
 								lightBulb.visible = true;
 								glowingBulb.visible = false;
+										currentBall.visible = false;
 
 							}
 
@@ -391,6 +411,7 @@ function onMouseMove(event) {
 							showMessage(event);
 							lightBulb.visible = true;
 							glowingBulb.visible = false;
+									currentBall.visible = false;
 						}
           // both wires, nothing else
 
@@ -402,10 +423,14 @@ function onMouseMove(event) {
 						{
 							newRect.visible = false;
 							 text.visible = false;
+							 myRect.fillColor = '#7D6CF3';
+							 myRect2.fillColor ='#7D6CF3';
 							console.log("both wires, circuit complete. O resistance"
 						)
 						text.content = 'Congratulations! Circuit contains both wires and is complete.';
 						showMessage(event);
+								currentBall.visible = true;
+
 						for(var i=0;i<dropPoints.length;i++)
 							 {
 
@@ -413,12 +438,12 @@ function onMouseMove(event) {
 						if (dropPoints[i].bounds.contains(lightBulb.bounds))
 
 								 {
-
-
+                if(glow!=false)
+                   {
 								 dropPoints[i].fillColor = 'red';
 								 lightBulb.visible = false;
 								 glowingBulb.visible = true;
-
+							 }
 
 							}
 							 else{
@@ -463,6 +488,8 @@ var battery = new Raster('paint2d.png',400, 390);
 battery.scale(0.7);
 
 var currentBall = new Raster('currentBall2.png', 500, 500);
+
+currentBall.visible = false;
 
 var dropPoints = []
 
@@ -533,6 +560,21 @@ var m=0;
 var n=0;
 var k=0;
 var p=0;
+var glow = true;
+
+hideGlowingBulb = function hideGlow()
+{
+  glowingBulb.visible = false;
+	lightBulb.visible = true;
+	myRect3.fillcolor ='#EEF9E6';
+	glow = false;
+
+}
+
+showGlow = function showGlowingBulb()
+{
+	glow = true;
+}
 
 
 
@@ -649,14 +691,10 @@ animate = function onFrame(event) {
 </script>
 </head>
 <body>
-	  <button type="button" onclick="reset()">Reset</button>
-	  <button type="button" onclick="circuit()" id="switch"><img src="switchOff.png" /></button>
+	  <button type="button" onclick="reset()" id="switchOff" ><img src="SwitchOff.png" /></button>
+	  <button type="button" onclick="circuit()" id="switchOn"><img src="SwitchOn.jpeg" /></button>
     <h1 id="heading"> Electric Circuit </h1>
 
-		<label class="switch">
-  <input type="checkbox" onclick="circuit()">
-  <span class="slider round"></span>
-  </label>
 
 
 	<canvas id="myCanvas" height="500px" width="800px"></canvas>
